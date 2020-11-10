@@ -24,18 +24,51 @@ namespace ConsoleApp1
             }
             return intlist;
         }
-
+        static List<int> Quicksort(List<int> list)
+        {
+            if (list.Count <= 1) return list;
+            int pivotPosition = list.Count / 2;
+            int pivotValue = list[pivotPosition];
+            list.RemoveAt(pivotPosition);
+            List<int> smaller = new List<int>();
+            List<int> greater = new List<int>();
+            foreach (int item in list)
+            {
+                if (item < pivotValue)
+                {
+                    smaller.Add(item);
+                }
+                else
+                {
+                    greater.Add(item);
+                }
+            }
+            List<int> sorted = Quicksort(smaller);
+            sorted.Add(pivotValue);
+            sorted.AddRange(Quicksort(greater));
+            return sorted;
+        }
         static void Main(string[] args)
         {
-             List<int> sortlist = new List<int>() { 5, 7, 3, 6, 2, 9, 6, 5, 4, 1, 8, 9 };
-           
+            List<int> sortlist = new List<int>() { 5, 7, 3, 6, 2, 9, 6, 5, 4, 1, 8, 9 };
+
             sortlist = Swap(sortlist);
 
             for (int i = 0; i < sortlist.Count; i++)
             {
                 Console.Write(sortlist[i]);
             }
+
             Console.ReadLine();
+            List<int> sortlist2 = new List<int>() { 5, 7, 3, 6, 2, 9, 6, 5, 4, 1, 8, 9 };
+            sortlist2 = Quicksort(sortlist2);
+
+            for (int i = 0; i < sortlist2.Count; i++)
+            {
+                Console.Write(sortlist2[i]);
+            }
+            Console.ReadLine();
+
         }
     }
 }
